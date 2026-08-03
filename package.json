@@ -1,0 +1,16 @@
+{
+  "name": "terra-store-db",
+  "version": "1.0.0",
+  "description": "Terra & Co. Store API - Project 3 (Database Integration) - DecodeLabs Internship",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node db/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^13.0.2"
+  }
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terra & Co. — Grounded Living, Delivered</title>
+  <meta name="description" content="A shopping store for sustainably crafted home, kitchen and self-care goods, now talking to a real backend API.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- shows up automatically if the backend can't be reached -->
+  <div class="connection-banner" id="connection-banner" role="status" aria-live="polite">
+    <span class="dot" aria-hidden="true"></span>
+    <span id="connection-banner-text">Can't reach the server right now.</span>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="Terra & Co. home">
+        <span class="logo-mark" aria-hidden="true">◐</span>
+        Terra&nbsp;&amp;&nbsp;Co.
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#about">Our Craft</a></li>
+          <li><a href="#footer">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="search-toggle" aria-expanded="false" aria-controls="search-bar" aria-label="Toggle search">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="icon-btn cart-btn" id="cart-toggle" aria-expanded="false" aria-controls="cart-drawer" aria-label="Open cart">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/><path d="M3 3h2l1 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span class="cart-count" id="cart-count" aria-live="polite">0</span>
+        </button>
+
+        <button class="icon-btn menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle menu">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="search-bar" id="search-bar" hidden>
+      <div class="search-bar-inner">
+        <label for="search-input" class="visually-hidden">Search products</label>
+        <input type="search" id="search-input" placeholder="Search for ceramics, candles, linen…" autocomplete="off">
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-inner">
+        <p class="eyebrow">Autumn 2026 Collection</p>
+        <h1 id="hero-heading">Things made slowly,<br>for a life lived well.</h1>
+        <p class="hero-copy">Small-batch ceramics, hand-poured candles and undyed linen — sourced from independent makers who care as much about the process as the product.</p>
+        <div class="hero-actions">
+          <a href="#shop" class="btn btn-primary">Shop the collection</a>
+          <a href="#about" class="btn btn-ghost">Our craft</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="hero-card">
+          <span class="hero-card-icon">🏺</span>
+          <span class="hero-card-label">Stoneware Vase</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories" id="categories" aria-labelledby="categories-heading">
+      <h2 id="categories-heading" class="visually-hidden">Shop by category</h2>
+      <div class="category-pills" id="category-pills" role="group" aria-label="Filter products by category">
+        <button class="pill is-active" data-category="all">All</button>
+        <button class="pill" data-category="home">Home</button>
+        <button class="pill" data-category="kitchen">Kitchen</button>
+        <button class="pill" data-category="decor">Decor</button>
+        <button class="pill" data-category="self-care">Self-Care</button>
+      </div>
+    </section>
+
+    <section class="shop" id="shop" aria-labelledby="shop-heading">
+      <div class="section-heading">
+        <h2 id="shop-heading">The Collection</h2>
+        <p id="results-count" aria-live="polite">Loading the collection…</p>
+      </div>
+
+      <!-- everything below is rendered by script.js depending on API state:
+           loading spinner -> error card -> the real product grid -->
+      <div id="shop-content">
+        <div class="loading-state" id="loading-state">
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Fetching products from the server…</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-heading">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="eyebrow">Why Terra & Co.</p>
+          <h2 id="about-heading">Every piece has a maker's name attached to it.</h2>
+          <p>We work directly with a small roster of studios and workshops. No mass production, no filler collections — just objects built to be used daily and to age well.</p>
+          <ul class="about-list">
+            <li><strong>Small batches</strong> — most pieces are made in runs of fewer than 200.</li>
+            <li><strong>Honest materials</strong> — stoneware, linen, soy wax, recycled glass.</li>
+            <li><strong>Fair pricing</strong> — makers set their own rates; we don't mark up beyond what keeps the lights on.</li>
+          </ul>
+        </div>
+        <div class="about-visual" aria-hidden="true">
+          <div class="stat-card">
+            <span class="stat-number">42</span>
+            <span class="stat-label">Independent makers</span>
+          </div>
+          <div class="stat-card stat-card-alt">
+            <span class="stat-number">6</span>
+            <span class="stat-label">Countries of origin</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="drawer-overlay" id="drawer-overlay" hidden></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <h2>Your Cart</h2>
+      <button class="icon-btn" id="cart-close" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <p class="cart-empty" id="cart-empty">Your cart is empty. Time to browse the collection.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+      <button class="btn btn-primary btn-block" id="checkout-btn">Checkout</button>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer" id="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-mark" aria-hidden="true">◐</span>
+        <p>Terra &amp; Co.</p>
+        <p class="footer-tagline">Grounded living, delivered.</p>
+      </div>
+      <nav class="footer-col" aria-label="Shop links">
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="#categories">Home</a></li>
+          <li><a href="#categories">Kitchen</a></li>
+          <li><a href="#categories">Decor</a></li>
+          <li><a href="#categories">Self-Care</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Company links">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#about">Our Craft</a></li>
+          <li><a href="#">Our Makers</a></li>
+          <li><a href="#">Sustainability</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h3>Get in touch</h3>
+        <ul>
+          <li><a href="mailto:hello@terraandco.com">hello@terraandco.com</a></li>
+          <li>Mon–Fri, 9am–6pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Terra & Co. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
